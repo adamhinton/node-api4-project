@@ -1,8 +1,10 @@
-require("dotenv").congig();
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 
 const server = express();
+
+const PORT = process.env.PORT || 9000;
 
 server.use(express.json());
 server.use(cors());
@@ -16,9 +18,12 @@ server.use("*", (req, res, next) => {
 });
 
 server.use((err, req, res, next) => {
+  //eslint-disable-line
   res.status(500).json({
     message: err.message,
   });
 });
 
-console.log(process.env.PORT, process.env.NODE_ENV);
+server.listen(PORT, () => {
+  console.log(`listening on ${PORT}`);
+});
